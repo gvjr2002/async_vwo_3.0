@@ -2,6 +2,34 @@
 <html lang="en">
 <head>
  <script>
+  (function () {
+  const params = new URLSearchParams(window.location.search);
+
+  if (!params.has("attr")) return;
+
+  const value = params.get("attr");
+
+  // Boolean
+  if (value === "true" || value === "false") {
+    Wingify.visitor({
+      "attr-bool": value === "true"
+    });
+    return;
+  }
+
+  // Number
+  if (value !== "" && !isNaN(value) && isFinite(value)) {
+    Wingify.visitor({
+      "attr-num": Number(value)
+    });
+    return;
+  }
+
+  // Text
+  Wingify.visitor({
+    "attr": value
+  });
+})();
 (function () {
   var params = new URLSearchParams(location.search);
   var cookieName = params.get('cookie');
